@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <title>404 — Lost in the Constellation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ── Theme Defaults (Dark) ──────────────────── */
+        :root {
+            --bg: #050510;
+            --bg-elevated: #0a0a1a;
+            --foreground: #e8e8f0;
+            --muted: #8a8a9e;
+            --muted-foreground: #6b6b80;
+            --accent: #7c5cfc;
+            --accent-glow: #a78bfa;
+            --accent-secondary: #4ec9b0;
+
+            /* Grid & atmosphere */
+            --grid-line: rgba(255, 255, 255, 0.03);
+            --grid-dot: rgba(255, 255, 255, 0.04);
+            --radial-glow: radial-gradient(circle, rgba(124, 92, 252, 0.12) 0%, rgba(78, 201, 176, 0.05) 35%, transparent 70%);
+            --constellation-line-color: rgba(255, 255, 255, 0.5);
+
+            /* Buttons */
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            --glass-hover-shadow: 0 6px 24px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+
+            --btn-primary-bg: linear-gradient(135deg, #7c5cfc 0%, #6d28d9 100%);
+            --btn-primary-color: #fff;
+            --btn-primary-shadow: 0 4px 20px rgba(124, 92, 252, 0.35), 0 1px 3px rgba(0, 0, 0, 0.3);
+            --btn-primary-hover-shadow: 0 8px 30px rgba(124, 92, 252, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35);
+            --btn-primary-active-shadow: 0 2px 10px rgba(124, 92, 252, 0.3), 0 1px 2px rgba(0, 0, 0, 0.3);
+
+            /* Particles */
+            --particle-color: rgba(255, 255, 255, 0.9);
+            --particle-glow: rgba(167, 139, 250, 0.5);
+
+            --radius: 12px;
+            --radius-sm: 8px;
+            --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        /* ── Light Theme Overrides ──────────────────── */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f8f7ff;
+                --bg-elevated: #ffffff;
+                --foreground: #1a1a2e;
+                --muted: #5b5b72;
+                --muted-foreground: #51516b;
+                --accent: #7c5cfc;
+                --accent-glow: #8b7cf6;
+
+                --grid-line: rgba(0, 0, 0, 0.06);
+                --grid-dot: rgba(0, 0, 0, 0.04);
+                --radial-glow: radial-gradient(circle, rgba(124, 92, 252, 0.08) 0%, rgba(78, 201, 176, 0.04) 35%, transparent 70%);
+                --constellation-line-color: rgba(0, 0, 0, 0.18);
+
+                --glass-bg: rgba(0, 0, 0, 0.03);
+                --glass-border: rgba(0, 0, 0, 0.08);
+                --glass-hover: rgba(0, 0, 0, 0.06);
+                --glass-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+                --glass-hover-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+
+                --btn-primary-bg: linear-gradient(135deg, #7c5cfc 0%, #6d28d9 100%);
+                --btn-primary-color: #ffffff;
+                --btn-primary-shadow: 0 4px 14px rgba(124, 92, 252, 0.3), 0 1px 2px rgba(0, 0, 0, 0.1);
+                --btn-primary-hover-shadow: 0 8px 24px rgba(124, 92, 252, 0.4), 0 2px 4px rgba(0, 0, 0, 0.15);
+                --btn-primary-active-shadow: 0 2px 8px rgba(124, 92, 252, 0.25), 0 1px 2px rgba(0, 0, 0, 0.1);
+
+                --particle-color: rgba(50, 40, 90, 0.65);
+                --particle-glow: rgba(124, 92, 252, 0.3);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg);
+            color: var(--foreground);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .main-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            overflow: hidden;
+        }
+
+        /* ── Grid Background ───────────────────────── */
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+            mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 75%);
+        }
+
+        .bg-grid::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 48px 48px;
+            background-position: center center;
+        }
+
+        .bg-grid::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+            background-size: 24px 24px;
+            background-position: 12px 12px;
+        }
+
+        /* ── Radial Glow ───────────────────────────── */
+        .bg-radial-fade {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 600px;
+            height: 400px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: var(--radial-glow);
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            animation: breathe 8s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.15);
+            }
+        }
+
+        /* ── Floating Particles ────────────────────── */
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            opacity: 0;
+            /* background and box-shadow set via JS with CSS variables */
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(0) translateX(0) scale(0);
+            }
+            10% {
+                opacity: 0.8;
+                transform: translateY(-20px) translateX(5px) scale(1);
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-400px) translateX(-15px) scale(0.3);
+            }
+        }
+
+        /* ── Content Wrapper ───────────────────────── */
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── 404 Heading ───────────────────────────── */
+        .heading-404 {
+            position: relative;
+            font-size: clamp(100px, 18vw, 180px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            color: var(--foreground);
+            user-select: none;
+        }
+
+        .heading-404 .digit {
+            display: inline-block;
+            background: linear-gradient(135deg, #c4b5fd 0%, #a78bfa 30%, #7c5cfc 60%, #6d28d9 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .heading-404 .zero {
+            display: inline-block;
+            background: linear-gradient(135deg, #4ec9b0 0%, #3db89e 30%, #67e8f9 60%, #2dd4bf 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            animation: wobble 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes wobble {
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(8deg);
+            }
+            75% {
+                transform: rotate(-8deg);
+            }
+        }
+
+        .subtitle {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--muted-foreground);
+            font-weight: 500;
+        }
+
+        .title {
+            margin-top: 1.5rem;
+            max-width: 28rem;
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--foreground);
+            line-height: 1.3;
+            text-wrap: balance;
+        }
+
+        .description {
+            margin-top: 0.75rem;
+            max-width: 28rem;
+            font-size: 0.9rem;
+            line-height: 1.65;
+            color: var(--muted-foreground);
+            text-wrap: balance;
+        }
+
+        .button-row {
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: var(--font-sans);
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: var(--btn-primary-bg);
+            color: var(--btn-primary-color);
+            box-shadow: var(--btn-primary-shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--btn-primary-hover-shadow);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: var(--btn-primary-active-shadow);
+            transition: all 0.1s ease;
+        }
+
+        .btn-glass {
+            background: var(--glass-bg);
+            color: var(--foreground);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .btn-glass:hover {
+            background: var(--glass-hover);
+            border-color: rgba(128, 128, 128, 0.25);
+            transform: translateY(-2px);
+            box-shadow: var(--glass-hover-shadow);
+        }
+
+        .btn-glass:active {
+            transform: translateY(0);
+            transition: all 0.1s ease;
+        }
+
+        .btn svg {
+            width: 1rem;
+            height: 1rem;
+            flex-shrink: 0;
+        }
+
+        .btn-primary svg {
+            color: #ffffff;
+        }
+
+        .btn-glass svg {
+            color: var(--muted);
+            transition: color 0.25s ease;
+        }
+
+        .btn-glass:hover svg {
+            color: var(--foreground);
+        }
+
+        /* ── Constellation Lines ──────────────────── */
+        .constellation-lines {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            opacity: 0.25;
+        }
+
+        .constellation-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--constellation-line-color), transparent);
+            transform-origin: left center;
+            animation: shimmer 6s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* ── Responsive ────────────────────────────── */
+        @media (max-width: 640px) {
+            .bg-radial-fade {
+                width: 350px;
+                height: 250px;
+            }
+            .constellation-lines {
+                width: 300px;
+                height: 300px;
+            }
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .heading-404 {
+                font-size: 80px;
+            }
+            .button-row {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        ::selection {
+            background: rgba(124, 92, 252, 0.3);
+            color: #fff;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: var(--radius);
+        }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        <!-- Grid background -->
+        <div class="bg-grid" aria-hidden="true"></div>
+
+        <!-- Radial glow -->
+        <div class="bg-radial-fade" aria-hidden="true"></div>
+
+        <!-- Constellation lines -->
+        <div class="constellation-lines" aria-hidden="true">
+            <div class="constellation-line" style="top:30%;left:10%;width:120px;transform:rotate(25deg);animation-delay:0s;"></div>
+            <div class="constellation-line" style="top:45%;left:25%;width:90px;transform:rotate(-15deg);animation-delay:1.5s;"></div>
+            <div class="constellation-line" style="top:55%;left:50%;width:140px;transform:rotate(40deg);animation-delay:3s;"></div>
+            <div class="constellation-line" style="top:35%;left:60%;width:100px;transform:rotate(-30deg);animation-delay:0.8s;"></div>
+            <div class="constellation-line" style="top:60%;left:35%;width:110px;transform:rotate(10deg);animation-delay:2.2s;"></div>
+            <div class="constellation-line" style="top:25%;left:40%;width:80px;transform:rotate(-45deg);animation-delay:4s;"></div>
+        </div>
+
+        <!-- Floating particles -->
+        <div class="particles" id="particles" aria-hidden="true"></div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="heading-404">
+                <span class="digit">4</span>
+                <span class="zero">0</span>
+                <span class="digit">4</span>
+            </div>
+
+            <p class="subtitle">Lost in the constellation</p>
+
+            <h2 class="title">This page drifted off the map.</h2>
+
+            <p class="description">
+                The URL you tried doesn't lead anywhere — yet. Head back home and pick
+                a different constellation to explore.
+            </p>
+
+            <div class="button-row">
+                <a href="/" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                    Back to home
+                </a>
+                <a href="https://github.com/lsgzt" target="_blank" rel="noopener noreferrer" class="btn btn-glass">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                        <path d="M9 18c-4.51 2-5-2-7-2"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ── Generate particles that respect theme via CSS variables ──
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 35;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            const size = Math.random() * 3 + 1;
+            const left = Math.random() * 100;
+            const delay = Math.random() * 12;
+            const duration = Math.random() * 10 + 8;
+            const opacityBase = Math.random() * 0.5 + 0.2;
+
+            // Use CSS variables for color and glow – they'll update with the theme
+            particle.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                left: ${left}%;
+                bottom: -10px;
+                animation-delay: ${delay}s;
+                animation-duration: ${duration}s;
+                opacity: ${opacityBase};
+                background: var(--particle-color);
+                box-shadow: 0 0 ${size * 2}px var(--particle-glow);
+            `;
+
+            particlesContainer.appendChild(particle);
+        }
+
+        // ── Subtle mouse parallax ────────────────────
+        const glow = document.querySelector('.bg-radial-fade');
+        const constellationLines = document.querySelector('.constellation-lines');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            if (glow) {
+                glow.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+            }
+            if (constellationLines) {
+                constellationLines.style.transform =
+                    `translate(calc(-50% + ${x * 0.5}px), calc(-50% + ${y * 0.5}px))`;
+            }
+        });
+
+        // ── Console Easter Egg ───────────────────────
+        console.log(
+            '%c✨ %c404 — Lost in the Constellation %c✨',
+            'font-size:16px;',
+            'font-size:16px;font-weight:bold;color:#a78bfa;',
+            'font-size:16px;'
+        );
+        console.log(
+            '%cThe page you seek is among the stars… but not this one.',
+            'color:inherit;font-style:italic;'
+        );
+    </script>
+</body>
+  </html>
