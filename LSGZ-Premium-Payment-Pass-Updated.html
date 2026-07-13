@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Fuel Future Projects • Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;background:#fafbff;color:#111827;overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;width:420px;height:420px;border-radius:50%;filter:blur(110px);opacity:.25;z-index:-2;animation:float 16s ease-in-out infinite}
+body:before{background:#8b5cf6;top:-150px;left:-120px}
+body:after{background:#60a5fa;bottom:-140px;right:-120px;animation-delay:5s}
+@keyframes float{50%{transform:translate(70px,-40px)}}
+.wrap{max-width:980px;margin:auto;padding:70px 22px}
+.badge{display:inline-flex;gap:10px;align-items:center;background:#fff;padding:10px 18px;border-radius:999px;border:1px solid #ececec;box-shadow:0 10px 25px rgba(0,0,0,.05)}
+.dot{width:10px;height:10px;background:#6d4cff;border-radius:50%}
+h1{font-size:clamp(2.8rem,6vw,4.5rem);line-height:1.05;margin:18px 0}
+.grad{background:linear-gradient(90deg,#6d4cff,#4f8cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.desc{max-width:720px;color:#64748b;line-height:1.8;margin-bottom:40px}
+.glass{background:rgba(255,255,255,.7);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.8);border-radius:34px;padding:36px;box-shadow:0 25px 60px rgba(0,0,0,.08)}
+.paytitle{text-align:center;font-weight:700;margin-bottom:28px}
+.pass{max-width:420px;margin:auto;background:linear-gradient(145deg,#fff,#f6f8ff);border-radius:30px;padding:24px;border:1px solid #ececec;box-shadow:0 18px 40px rgba(0,0,0,.08);transition:.4s;transform-style:preserve-3d}
+.pass:hover{transform:perspective(900px) rotateX(5deg) rotateY(-5deg) translateY(-6px);box-shadow:0 35px 70px rgba(108,76,255,.18)}
+.head{display:flex;justify-content:space-between;align-items:center}
+.verify{font-size:.75rem;color:#059669;background:#ecfdf5;padding:6px 10px;border-radius:999px}
+.scan{text-align:center;color:#64748b;margin:16px 0}
+.qr{display:flex;justify-content:center;position:relative}
+.qr-glow{position:relative;display:inline-flex}
+.qr-glow::before{
+content:"";
+position:absolute;
+inset:22px;
+border-radius:28px;
+background:rgba(108,76,255,.08);
+filter:blur(14px);
+opacity:0;
+transition:.35s ease;
+z-index:-1;
+}
+.qr img{
+width:250px;
+border-radius:18px;
+transition:transform .35s ease;
+display:block;
+}
+.pass:hover .qr-glow::before{
+opacity:1;
+}
+.pass:hover .qr img{
+transform:translateY(-4px) scale(1.02);
+}
+.apps{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0}
+.apps span{padding:7px 12px;border-radius:999px;background:#f3f4f6;font-size:.82rem}
+.row{display:flex;justify-content:space-between;align-items:center;background:#f8fafc;border:1px solid #ececec;border-radius:16px;padding:12px}
+.copy{border:none;background:linear-gradient(90deg,#6d4cff,#4f8cff);color:#fff;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer}
+.div{text-align:center;margin:30px;color:#94a3b8;font-weight:600}
+.coffee{max-width:560px;margin:auto;background:linear-gradient(180deg,#fff9dd,#fff5bf);padding:28px;border-radius:28px;border:1px solid #ffe082;transition:.3s}
+.coffee:hover{transform:translateY(-4px)}
+.coffee a{display:inline-block;margin-top:18px;padding:14px 26px;background:#ffd400;color:#111;text-decoration:none;border-radius:999px;font-weight:700}
+.sec{text-align:center;margin:42px 0 10px}
+.secdesc{text-align:center;color:#64748b;max-width:580px;margin:0 auto 26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.box{background:#fff;border:1px solid #ececec;border-radius:22px;padding:22px;transition:.25s}
+.box:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(0,0,0,.06)}
+.box p{color:#64748b;line-height:1.6;margin-top:8px}
+footer{text-align:center;padding:42px;color:#64748b}
+.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,100px);background:#111827;color:#fff;padding:14px 22px;border-radius:999px;opacity:0;transition:.3s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="badge"><span class="dot"></span>Independent Developer</div>
+<h1>Fuel <span class="grad">Future Projects</span></h1>
+<p class="desc">Every contribution helps keep my current AI projects online and gives me the freedom to build the next one.</p>
+
+<div class="glass">
+<div class="paytitle">Choose your preferred payment method</div>
+
+<div class="pass">
+<div class="head"><strong>🇮🇳 UPI Payment</strong><span class="verify">Verified</span></div>
+<div class="scan">Scan with any UPI app</div>
+<div class="qr"><div class="qr-glow"><img src="https://i.ibb.co/WWx68SzJ/1783861584738.png"></div></div>
+<div class="apps"><span>Google Pay</span><span>PhonePe</span><span>Paytm</span><span>BHIM</span><span>Amazon Pay</span></div>
+<div class="row"><div><small style="color:#64748b">UPI ID</small><br><b>lsgz@jio</b></div><button class="copy" onclick="copyUPI()">Copy</button></div>
+</div>
+
+<div class="div">OR</div>
+
+<div class="coffee" align="center">
+<div style="font-size:3rem">☕</div>
+<h2>Buy Me a Coffee</h2>
+<p style="color:#64748b;line-height:1.7">Support in your local currency using cards and other supported payment methods.</p>
+<a href="https://buymeacoffee.com/YOUR_USERNAME" target="_blank">Open Buy Me a Coffee →</a>
+</div>
+
+<h2 class="sec">Why contribute?</h2>
+<p class="secdesc">Your support directly funds the services and infrastructure behind my projects.</p>
+
+<div class="grid">
+<div class="box"><h3>⚡ AI APIs</h3><p>Gemini, Groq, OpenAI and other APIs used in my applications.</p></div>
+<div class="box"><h3>☁ Hosting & Domains</h3><p>Servers, databases, domains and deployment costs.</p></div>
+<div class="box"><h3>🚀 Future Projects</h3><p>New AI tools, experiments and open-source releases.</p></div>
+</div>
+</div>
+
+<footer><strong>Every contribution genuinely helps ❤️</strong><br><br>Thank you for being part of the journey.<br>Made with passion by <b>LSGZ</b></footer>
+</div>
+
+<div class="toast" id="t">✓ UPI ID copied</div>
+<script>
+function copyUPI(){
+navigator.clipboard.writeText("lsgz@jio");
+let t=document.getElementById("t");
+t.classList.add("show");
+setTimeout(()=>t.classList.remove("show"),2200);
+}
+</script>
+</body>
+</html>
